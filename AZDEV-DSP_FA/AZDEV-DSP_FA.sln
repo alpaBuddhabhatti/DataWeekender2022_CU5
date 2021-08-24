@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30517.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AZDEV-DSP_FA", "AZDEV-DSP_FA.csproj", "{33C77F0D-7D71-44FC-BE77-2A456327112D}"
+EndProject
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "Deployment.Azure.function", "..\Deployment\Deploy.Azure.function\Deployment.Azure.function\Deployment.Azure.function.deployproj", "{465BE7A1-57F4-4A48-81B9-F1D0501BE472}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FA4A2637-34C6-4A94-8AE5-F04C959A326F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{33C77F0D-7D71-44FC-BE77-2A456327112D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33C77F0D-7D71-44FC-BE77-2A456327112D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33C77F0D-7D71-44FC-BE77-2A456327112D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33C77F0D-7D71-44FC-BE77-2A456327112D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{465BE7A1-57F4-4A48-81B9-F1D0501BE472}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{465BE7A1-57F4-4A48-81B9-F1D0501BE472}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{465BE7A1-57F4-4A48-81B9-F1D0501BE472}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{465BE7A1-57F4-4A48-81B9-F1D0501BE472}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {923E63B3-F25C-4490-8D54-C2CC01894690}
+	EndGlobalSection
+EndGlobal
