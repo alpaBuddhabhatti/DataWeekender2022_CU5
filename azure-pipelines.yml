@@ -51,12 +51,6 @@ stages:
       artifact: drop
  
     - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact: Function'
-      inputs:
-          PathtoPublish: 'AZDEV-DSP_FA'
-          ArtifactName: Function
-
-    - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: drop1'
       inputs:
           PathtoPublish: Deployment/Deploy.Azure.function/Deployment.Azure.function
