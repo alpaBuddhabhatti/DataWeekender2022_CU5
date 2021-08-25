@@ -124,34 +124,53 @@
                     }
     },
     {
-      "apiVersion": "2020-06-01",
+      "apiVersion": "2015-04-01",
+      "type": "Microsoft.Web/sites",
+      "name": "[parameters('functionAppName')]",
+      "location": "[resourceGroup().location]",
+      "kind": "functionapp",
+      "properties": {
+        "name": "[parameters('functionAppName')]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
+        "hostingEnvironment": "",
+        "clientAffinityEnabled": false,
+        "alwaysOn": true
+      },
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
         "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
         "[resourceId('Microsoft.Insights/components',variables('applicationInsightsName'))]"
       ],
-      "kind": "functionapp",
-      "location": "[parameters('location')]",
-      "name": "[variables('functionAppName')]",
-      "properties": {
-        "FUNCTIONS_EXTENSION_VERSION": "~3",
-        "FUNCTIONS_WORKER_RUNTIME": "dotnet",
-        "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(resourceId('microsoft.insights/components', variables('applicationInsightsName')), '2020-02-02-preview').InstrumentationKey]",
-        "AzureWebJobsStorage": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1,';')]",
-        "StorageConnectionAppSetting": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1,';')]"
-      },
-      "type": "Microsoft.Web/sites"
+      "resources": [
+        {
+          "apiVersion": "2016-03-01",
+          "name": "appsettings",
+          "type": "config",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', parameters('functionAppName'))]",
+            "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+          ],
+          "properties": {
+            "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(concat('microsoft.insights/components/', variables('applicationInsightsName'))).InstrumentationKey]",
+            "AzureWebJobsStorage": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1,';')]",
+            "AzureWebJobsDashboard": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1,';')]",
+            "FUNCTIONS_EXTENSION_VERSION": "~3",
+            "FUNCTIONS_WORKER_RUNTIME": "dotnet"
+
+          }
+        }
+      ]
     },
     {
-      "name": "[variables('applicationInsightsName')]",
-      "type": "Microsoft.Insights/components",
-      "apiVersion": "2015-05-01",
-      "location": "[resourceGroup().location]",
-      "kind": "other",
-      "properties": {
-        "Application_Type": "other",
-        "ApplicationId": "[variables('functionAppNameResourceID')]"
+        "name": "[variables('applicationInsightsName')]",
+        "type": "Microsoft.Insights/components",
+        "apiVersion": "2015-05-01",
+        "location": "[resourceGroup().location]",
+        "kind": "other",
+        "properties": {
+          "Application_Type": "other",
+          "ApplicationId": "[variables('functionAppNameResourceID')]"
+        }
       }
-    }
   ]
 }
