@@ -80,8 +80,8 @@
     //"storageAccountName": "[concat(uniquestring(resourceGroup().id), 'azfunctions')]",
     "functionWorkerRuntime": "[parameters('runtime')]",
     "storageAccountName": "[concat(parameters('coreStorageAccount'), 'funcs')]",
-    "coreStorageAccountResourceId": "[resourceId(parameters('coreRG'),'Microsoft.Storage/storageAccounts', parameters('coreStorageAccount'))]",
-    "functionAppNameResourceID": "[resourceId('Microsoft.Web/sites', parameters('functionAppName'))]"
+    "coreStorageAccountResourceId": "[resourceId(parameters('coreRG'),'Microsoft.Storage/storageAccounts', concat(parameters('coreStorageAccount'), 'funcs'))]",
+    "functionAppNameResourceID": "[resourceId('Microsoft.Web/sites', concat('az',parameters('envName'),'-funapp'))]"
 
   },
   "resources": [
