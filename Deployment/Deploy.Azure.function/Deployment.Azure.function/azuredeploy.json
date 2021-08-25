@@ -1,18 +1,11 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "$schema": "http://schemas.management.azure.com/schemas/2015-01-01-preview/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
     "envName": {
       "type": "string",
       "defaultValue": "dev"
     },
-    //"appName": {
-    //  "type": "string",
-    //  "defaultValue": "[concat('az',parameters('envName'),'-funapp-', uniqueString(resourceGroup().id))]",
-    //  "metadata": {
-    //    "description": "The name of the function app that you wish to create."
-    //  }
-    //},
     "storageAccountType": {
       "type": "string",
       "defaultValue": "Standard_LRS",
@@ -25,28 +18,16 @@
         "description": "Storage Account type"
       }
     },
-    "location": {
-      "type": "string",
-      "defaultValue": "[resourceGroup().location]",
-      "metadata": {
-        "description": "Location for all resources."
-      }
-    },
-    "appInsightsLocation": {
-      "type": "string",
-      "metadata": {
-        "description": "Location for Application Insights"
-      }
-    },
-
     "functionAppName": {
       "type": "string",
+      "defaultValue": "dps-demo",
       "metadata": {
         "description": "The name of the function app that you wish to create."
       }
     },
     "coreStorageAccount": {
       "type": "string",
+      "defaultValue": "dpsstordemo",
       "metadata": {
         "description": "The external storage account to reference in app.settings"
       }
@@ -104,7 +85,7 @@
       "type": "Microsoft.Storage/storageAccounts",
       "apiVersion": "2019-06-01",
       "name": "[variables('storageAccountName')]",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "sku": {
         "name": "[parameters('storageAccountType')]"
       },
@@ -116,21 +97,21 @@
       "name": "[variables('hostingPlanName')]",
       "location": "[resourceGroup().location]",
       "properties": {
-                      "name": "[variables('hostingPlanName')]",
-                      "sku": "[parameters('sku')]",
-                      "workerSize": "[parameters('workerSize')]",
-                      "hostingEnvironment": "",
-                      "numberOfWorkers": 1
-                    }
+        "name": "[variables('hostingPlanName')]",
+        "sku": "[parameters('sku')]",
+        "workerSize": "[parameters('workerSize')]",
+        "hostingEnvironment": "",
+        "numberOfWorkers": 1
+      }
     },
     {
       "apiVersion": "2015-04-01",
       "type": "Microsoft.Web/sites",
-      "name": "[parameters('functionAppName')]",
+      "name": "[variables('functionAppName')]",
       "location": "[resourceGroup().location]",
       "kind": "functionapp",
       "properties": {
-        "name": "[parameters('functionAppName')]",
+        "name": "[variables('functionAppName')]",
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
         "hostingEnvironment": "",
         "clientAffinityEnabled": false,
@@ -147,7 +128,7 @@
           "name": "appsettings",
           "type": "config",
           "dependsOn": [
-            "[resourceId('Microsoft.Web/sites', parameters('functionAppName'))]",
+            "[resourceId('Microsoft.Web/sites', variables('functionAppName'))]",
             "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
           ],
           "properties": {
@@ -162,15 +143,15 @@
       ]
     },
     {
-        "name": "[variables('applicationInsightsName')]",
-        "type": "Microsoft.Insights/components",
-        "apiVersion": "2015-05-01",
-        "location": "[resourceGroup().location]",
-        "kind": "other",
-        "properties": {
-          "Application_Type": "other",
-          "ApplicationId": "[variables('functionAppNameResourceID')]"
-        }
+      "name": "[variables('applicationInsightsName')]",
+      "type": "Microsoft.Insights/components",
+      "apiVersion": "2015-05-01",
+      "location": "[resourceGroup().location]",
+      "kind": "other",
+      "properties": {
+        "Application_Type": "other",
+        "ApplicationId": "[variables('functionAppNameResourceID')]"
       }
+    }
   ]
 }
