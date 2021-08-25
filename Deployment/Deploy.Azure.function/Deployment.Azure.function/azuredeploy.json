@@ -6,13 +6,13 @@
       "type": "string",
       "defaultValue": "dev"
     },
-    "appName": {
-      "type": "string",
-      "defaultValue": "[concat('az',parameters('envName'),'-funapp-', uniqueString(resourceGroup().id))]",
-      "metadata": {
-        "description": "The name of the function app that you wish to create."
-      }
-    },
+    //"appName": {
+    //  "type": "string",
+    //  "defaultValue": "[concat('az',parameters('envName'),'-funapp-', uniqueString(resourceGroup().id))]",
+    //  "metadata": {
+    //    "description": "The name of the function app that you wish to create."
+    //  }
+    //},
     "storageAccountType": {
       "type": "string",
       "defaultValue": "Standard_LRS",
@@ -40,7 +40,7 @@
     },
     "runtime": {
       "type": "string",
-      "defaultValue": "node",
+      "defaultValue": "dotnet",
       "allowedValues": [
         "node",
         "dotnet",
@@ -52,9 +52,9 @@
     }
   },
   "variables": {
-    "functionAppName": "[parameters('appName')]",
-    "hostingPlanName": "[parameters('appName')]",
-    "applicationInsightsName": "[parameters('appName')]",
+    "functionAppName": "[concat('az',parameters('envName'),'-funapp-', uniqueString(resourceGroup().id))]",
+    "hostingPlanName": "[concat('az',parameters('envName'),'-funapp-', uniqueString(resourceGroup().id))]",
+    "applicationInsightsName": "[concat('az',parameters('envName'),'-funappInsight-', uniqueString(resourceGroup().id))]",
     "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'azfunctions')]",
     "functionWorkerRuntime": "[parameters('runtime')]"
   },
