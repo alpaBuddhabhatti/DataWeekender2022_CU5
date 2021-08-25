@@ -57,7 +57,7 @@ stages:
           ArtifactName: Function
 
     - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact: drop'
+      displayName: 'Publish Artifact: drop1'
       inputs:
           PathtoPublish: Deployment/Deploy.Azure.function/Deployment.Azure.function
 
