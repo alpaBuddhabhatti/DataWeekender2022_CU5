@@ -49,5 +49,15 @@ stages:
 
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
       artifact: drop
-    
+ 
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: Function'
+      inputs:
+          PathtoPublish: 'AZDEV-DSP_FA'
+          ArtifactName: Function
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: drop'
+      inputs:
+          PathtoPublish: Deployment/Deploy.Azure.function/Deployment.Azure.function
 
