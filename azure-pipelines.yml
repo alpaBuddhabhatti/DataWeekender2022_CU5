@@ -48,5 +48,10 @@ stages:
         replaceExistingArchive: true
 
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-      artifact: drop
+      artifact: drop1
+ 
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: drop2'
+      inputs:
+          PathtoPublish: Deployment/Deploy.Azure.function/Deployment.Azure.function
 
