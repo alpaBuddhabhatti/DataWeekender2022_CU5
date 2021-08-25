@@ -116,32 +116,31 @@
       "name": "[variables('hostingPlanName')]",
       "location": "[resourceGroup().location]",
       "properties": {
-        "name": "[variables('hostingPlanName')]",
-        "sku": "[parameters('sku')]",
-        "workerSize": "[parameters('workerSize')]",
-        "hostingEnvironment": "",
-        "numberOfWorkers": 1
-      }
+                      "name": "[variables('hostingPlanName')]",
+                      "sku": "[parameters('sku')]",
+                      "workerSize": "[parameters('workerSize')]",
+                      "hostingEnvironment": "",
+                      "numberOfWorkers": 1
+                    }
     },
-
     {
-      "type": "Microsoft.Web/sites",
       "apiVersion": "2020-06-01",
-      "name": "[variables('functionAppName')]",
-      "location": "[parameters('location')]",
-      "kind": "functionapp",
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
         "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
         "[resourceId('Microsoft.Insights/components',variables('applicationInsightsName'))]"
       ],
+      "kind": "functionapp",
+      "location": "[parameters('location')]",
+      "name": "[variables('functionAppName')]",
       "properties": {
         "FUNCTIONS_EXTENSION_VERSION": "~3",
         "FUNCTIONS_WORKER_RUNTIME": "dotnet",
         "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(resourceId('microsoft.insights/components', variables('applicationInsightsName')), '2020-02-02-preview').InstrumentationKey]",
         "AzureWebJobsStorage": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1,';')]",
         "StorageConnectionAppSetting": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1,';')]"
-      }
+      },
+      "type": "Microsoft.Web/sites"
     },
     {
       "name": "[variables('applicationInsightsName')]",
@@ -152,7 +151,6 @@
       "properties": {
         "Application_Type": "other",
         "ApplicationId": "[variables('functionAppNameResourceID')]"
-
       }
     }
   ]
