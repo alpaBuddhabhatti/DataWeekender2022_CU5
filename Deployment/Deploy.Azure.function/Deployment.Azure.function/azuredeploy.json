@@ -65,13 +65,13 @@
     }
   },
   "variables": {
-    "functionAppName": "[concat('az',parameters('envName'),'-funapp')]",
-    "hostingPlanName": "[concat('az',parameters('envName'),'-funapp')]",
-    "applicationInsightsName": "[concat('az',parameters('envName'),'-funappInsight')]",
+    "functionAppName": "[concat('az',parameters('envName'),'-',parameters('functionAppName'),'-funapp')]",
+    "hostingPlanName": "[concat('az',parameters('envName'),'-',parameters('functionAppName'),'-funapp')]",
+    "applicationInsightsName": "[concat('az',parameters('envName'),'-',parameters('functionAppName'),'-funappInsight')]",
     //"storageAccountName": "[concat(uniquestring(resourceGroup().id), 'azfunctions')]",
     "functionWorkerRuntime": "[parameters('runtime')]",
     "storageAccountName": "[concat(parameters('coreStorageAccount'), 'funcs')]",
-"functionAppNameResourceID": "[resourceId('Microsoft.Web/sites', concat('az',parameters('envName'),'-funapp'))]"
+    "functionAppNameResourceID": "[resourceId('Microsoft.Web/sites', concat('az',parameters('envName'),'-',parameters('functionAppName'),'-funapp'))]"
 
   },
   "resources": [
@@ -107,7 +107,8 @@
       "kind": "functionapp",
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
+        "[resourceId('Microsoft.Insights/components',variables('applicationInsightsName'))]"
       ],
       "properties": {
         "FUNCTIONS_EXTENSION_VERSION": "~3",
