@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -11,21 +11,23 @@ namespace AZDEV_DSP_FA
 {
     public static class ResizeImage
     {
-        [FunctionName("ResizeImage")]
-        public static void Run(
-   [BlobTrigger("input/Picture 2.jpg", Connection = "StorageConnectionAppSetting")] Stream image,
-   [Blob("output/Picture 2 sm.jpg", FileAccess.Write, Connection = "StorageConnectionAppSetting")] Stream imageSmall,
-   [Blob("output/Picture 2 md.jpg", FileAccess.Write, Connection = "StorageConnectionAppSetting")] Stream imageMedium,
+   [FunctionName("ResizeImage")]
+   public static void Run(
+   [BlobTrigger("input/{name}.jpg", Connection = "StorageConnectionAppSetting")] Stream image,
+   [Blob("output/{name} sm.jpg", FileAccess.Write, Connection = "StorageConnectionAppSetting")] Stream imageSmall,
+   [Blob("output/{name} md.jpg", FileAccess.Write, Connection = "StorageConnectionAppSetting")] Stream imageMedium,
+   string name,
    ILogger log)
         {
             log.LogInformation($"Full blob path: image");
             IImageFormat format;
 
+            //Resizing Image to Small
             using (Image<Rgba32> input = Image.Load<Rgba32>(image, out format))
             {
                 ResizeImage1(input, imageSmall, ImageSize.Small, format);
             }
-
+            //Resizing Image to Midium
             image.Position = 0;
             using (Image<Rgba32> input = Image.Load<Rgba32>(image, out format))
             {
@@ -33,7 +35,7 @@ namespace AZDEV_DSP_FA
             }
         }
 
-
+        //Resizing logic
         public static void ResizeImage1(Image<Rgba32> input, Stream output, ImageSize size, IImageFormat format)
         {
             var dimensions = imageDimensionsTable[size];
