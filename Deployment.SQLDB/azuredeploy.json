@@ -18,6 +18,10 @@
       "apiVersion": "2021-02-01-preview",
       "name": "[concat(parameters('servers_name'), '/',parameters('Database_name'))]",
       "location": "eastus",
+      "dependsOn": [
+  "[variables('servers_name')]"
+],
+
       "sku": {
         "name": "GP_S_Gen5",
         "tier": "GeneralPurpose",
