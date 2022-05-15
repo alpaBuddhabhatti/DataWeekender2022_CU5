@@ -3,8 +3,6 @@
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_WORKER_RUNTIME": "dotnet",
-    "StorageConnectionAppSetting": "DefaultEndpointsProtocol=https;AccountName=azdevstoredgs2021;AccountKey=EOwwF+LwZwhTKNKNJCaMPZae4WVbdEP3hb6LipsMZU7tY9JjWAAPBcEetkK3qfEN+vZjm0xLA2bxaTnvR62Fdw==;EndpointSuffix=core.windows.net"
-
-    //"DefaultEndpointsProtocol=https;AccountName=azdevstoredspdemo;AccountKey=pVyjuJhtH2Ud9W59uV/TLWOnFB+Ri2g/b8FAkzHvjkO3AbRp2HC4K266M3ahsi1Cc/OI0a8aRkg02Nz/ng95aQ==;EndpointSuffix=core.windows.net"
+    "StorageConnectionAppSetting": "<your  blob storage connection string >"
   }
 }
